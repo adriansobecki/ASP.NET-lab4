@@ -25,6 +25,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/api">Api</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/weathers/Index">Weathers</a>
                         </li>
                     </ul>
@@ -35,6 +38,7 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
+
         </main>
     </div>
 
@@ -50,4 +54,4 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html>
+    </html>

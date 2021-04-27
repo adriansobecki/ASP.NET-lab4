@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using WebApplication3.Data;
+
 
 namespace WebApplication3
 {
@@ -17,18 +19,24 @@ namespace WebApplication3
             myWeatherTask.Wait();
             WeatherApi myWeather = myWeatherTask.Result;
 
-            Thread.Sleep(5000);
-
             
             string dataTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-            string toDisplay = city + " (" + dataTime + ")";
-            toDisplay += ": " + (myWeather.main.temp - 273.15).ToString() + "°C";
-            toDisplay += ": " + (myWeather.weather[0].description);
 
-            var context = new WebApplication3Context(null);
-            context.Add(new WebApplication3.Models.weather { name = myWeather.name, datatime = dataTime, temp = myWeather.main.temp, description = myWeather.weather[0].description });
+
+            var contextOptions = new DbContextOptionsBuilder<WebApplication3Context>()
+.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=WebApplication3Context-6c28e34d-e6cb-4189-9bb9-60ff82f2a08f;Trusted_Connection=True;MultipleActiveResultSets=true")
+.Options;
+            var context = new WebApplication3Context(contextOptions);
+
+            var weath = new Models.weather();
+            weath.name = myWeather.name;
+            weath.temp = Math.Round(myWeather.main.temp - 273.15, 1);
+            weath.datatime = dataTime;
+            weath.description = myWeather.weather[0].description;
+            context.Add(weath);
             context.SaveChanges();
-            
+
+
             return myWeather;
         }
 
