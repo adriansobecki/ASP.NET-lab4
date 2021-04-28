@@ -10,17 +10,27 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["searchString"]" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </p>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.weather[0].name)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.weather[0].name)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.weather[0].datatime)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.weather[0].datatime)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.weather[0].temp)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TempSortParm"]">@Html.DisplayNameFor(model => model.weather[0].temp)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.weather[0].description)

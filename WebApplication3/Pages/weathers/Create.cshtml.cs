@@ -27,7 +27,6 @@ namespace WebApplication3.Pages.weathers
         [BindProperty]
         public weather weather { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -38,7 +37,7 @@ namespace WebApplication3.Pages.weathers
             _context.weather.Add(weather);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToRoute("weathers");
         }
     }
 }
